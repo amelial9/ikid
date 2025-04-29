@@ -11,33 +11,33 @@ struct ContentView: View {
     var body: some View {
         
         TabView {
-            JokeView(joke: "joke1",
-                     punchline: "punchline1",
-                     punchlineImage: "")
+            JokeView(joke: "What's the object-oriented way to become wealthy?",
+                     punchline: "Inheritance.",
+                     punchlineImage: nil)
                 .tabItem {
-                    Image(systemName: "house")
+                    Image(systemName: "sparkles")
                     Text("Good")
                 }
-            JokeView(joke: "joke2",
-                     punchline: "punchline2",
-                     punchlineImage: "")
+            JokeView(joke: "Why do programmers use dark mode?",
+                     punchline: "Because light attracts bugs.",
+                     punchlineImage: nil)
                 .tabItem {
-                    Image(systemName: "house")
+                    Image(systemName: "lightbulb")
                     Text("Pun")
                 }
-            JokeView(joke: "joke3",
-                     punchline: "punchline3",
-                     punchlineImage: "")
+            JokeView(joke: "Where do dads store all their dad jokes?",
+                     punchline: "In the dad-a-base.",
+                     punchlineImage: "dad")
                 .tabItem {
-                    Image(systemName: "house")
+                    Image(systemName: "mustache")
                     Text("Dad")
                 }
             KnockKnockView(steps: [
                 "Knock knock!",
                 "Who's there?",
-                "x",
-                "x who?",
-                "hehehe"
+                "Yah!",
+                "Yah, who?",
+                "No not Yahoo, Google."
             ])
                 .tabItem {
                     Image(systemName: "door.left.hand.open")
@@ -68,32 +68,34 @@ struct JokeView: View {
                 Image(imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(maxWidth: 200, maxHeight: 200)
+                    .frame(maxWidth: 250, maxHeight: 250)
                     .padding()
                     .transition(.opacity)
             }
 
             Spacer()
 
-            Button(action: {
-                withAnimation {
-                    revealed.toggle()
+            HStack {
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        revealed.toggle()
+                    }
+                }) {
+                    Text(revealed ? "Hide" : "Next")
+                        .font(.headline)
+                        .frame(width: 150)
+                        .padding()
+                        .background(
+                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                           startPoint: .leading,
+                                           endPoint: .trailing)
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(30)
+                        .shadow(radius: 5)
                 }
-            }) {
-                Text(revealed ? "Hide" : "Next")
-                    .font(.headline)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        LinearGradient(gradient: Gradient(
-                            colors: [Color.blue, Color.purple]),
-                            startPoint: .leading,
-                            endPoint: .trailing)
-                    )
-                    .foregroundColor(.white)
-                    .cornerRadius(30)
-                    .padding(.horizontal, 40)
-                    .shadow(radius: 5)
+                .padding(.horizontal, 30)
             }
             .padding(.bottom, 30)
         }
@@ -122,29 +124,31 @@ struct KnockKnockView: View {
 
             Spacer()
 
-            Button(action: {
-                if stepIndex < steps.count {
-                    history.append(steps[stepIndex])
-                    stepIndex += 1
-                } else {
-                    history = []
-                    stepIndex = 0
+            HStack {
+                Spacer()
+                Button(action: {
+                    if stepIndex < steps.count {
+                        history.append(steps[stepIndex])
+                        stepIndex += 1
+                    } else {
+                        history = []
+                        stepIndex = 0
+                    }
+                }) {
+                    Text(stepIndex == steps.count ? "Restart" : "Next")
+                        .font(.headline)
+                        .frame(width: 150)
+                        .padding()
+                        .background(
+                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                           startPoint: .leading,
+                                           endPoint: .trailing)
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(30)
+                        .shadow(radius: 5)
                 }
-            }) {
-                Text(stepIndex == steps.count ? "Restart" : "Next")
-                    .font(.headline)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        LinearGradient(gradient: Gradient(
-                            colors: [Color.blue, Color.purple]),
-                            startPoint: .leading,
-                            endPoint: .trailing)
-                    )
-                    .foregroundColor(.white)
-                    .cornerRadius(30)
-                    .padding(.horizontal, 40)
-                    .shadow(radius: 5)
+                .padding(.horizontal, 30)
             }
             .padding(.bottom, 30)
         }
